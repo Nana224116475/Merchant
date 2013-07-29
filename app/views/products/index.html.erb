@@ -9,6 +9,7 @@
       <th>Description</th>
       <th>Image</th>
       <th>Stock</th>
+      <th>Buy</th>
     </tr>
   </thead>
 
@@ -21,6 +22,7 @@
         <td><%= product.description %></td>
         <td><%= image_tag "products/#{product.image_url}" %></td>
         <td><%= product.stock %></td> 
+        <td><%= button_to "Add to Cart", order_items_path(product_id: product.id) %></td>
       </tr>
       <% end %>
     </tbody>
