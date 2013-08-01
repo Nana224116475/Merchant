@@ -41,7 +41,7 @@ class OrderItemsController < ApplicationController
   def destroy
     @order_item.destroy
     respond_to do |format|
-      format.html { redirect_to order_items_url }
+      format.html { redirect_to order_path(session[:order_id]) }
       format.json { head :no_content }
     end
   end
