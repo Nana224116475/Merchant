@@ -9,7 +9,7 @@ class OrderItemsController < ApplicationController
   # POST /order_items
   # POST /order_items.json
   def create
-    @order_item = @order.order_items.new(quantity: 1, product_id: params[:product_id])
+    @order_item = @order.order_items.find_or_initialize_by_product_id(params[:product_id], quantity: 1)
     
     respond_to do |format|
       if @order_item.save
@@ -26,10 +26,13 @@ class OrderItemsController < ApplicationController
   # PATCH/PUT /order_items/1.json
   def update
     respond_to do |format|
-      if @order_item.update(order_item_params)
-        format.html { redirect_to @order_item, notice: 'Order item was successfully updated.' }
+      if params[:order_item][:quantity].to_i == 0
+          format.html {render action: 'destroy'}
+          format.html {redirect_to order_path(session[:order_id]), notice: 'The Item was removed' }
+      elsif @order_item.update(order_item_params)
+        format.html { redirect_to order_path(session[:order_id]), notice: 'Order item was successfully updated.' }
         format.json { head :no_content }
-      else
+       else
         format.html { render action: 'edit' }
         format.json { render json: @order_item.errors, status: :unprocessable_entity }
       end

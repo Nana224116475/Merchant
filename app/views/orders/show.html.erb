@@ -17,6 +17,7 @@
     <th>Items</th>
     <th>Title</th>
     <th>Quantity</th>
+    <th>Stock</th>
     <th>Unit Price</th>
     <th>Subtotal</th>
     
@@ -28,16 +29,22 @@
   	<td><%= order_item.product.title %></br>
     <%= link_to 'Remove', order_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
  
-  	<td><%= order_item.quantity %></td>
+  	<td><%= link_to order_item.quantity, edit_order_item_path(order_item) %></td>
+
+    <td><%= print_stock order_item.product.stock, order_item.quantity %></td>
   
-  	<td><%= order_item.product.price %></td>
+
+  	<td><%= print_price order_item.product.price %></td>
 
   	<td><%= print_price order_item.subtotal %></td>
    
   </tr>
 <% end %>
 
-<th>Order Total</th>
+<td></td>
+<td></td>
+<td></td>
+<th>Total :</th>
 <td><%= print_price @order.total %></td>
 </table>
 
